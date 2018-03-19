@@ -1,5 +1,5 @@
-Note to Self: Rcpp classes are always passed by reference!
-==========================================================
+Note to Self: There is no Rcpp const!
+=====================================
 
 `Rcpp` passes all internals objects by reference only, never by value. This repo demonstrates the implications of this as a clear and simple Note To Self. It relies on these `C++` functions
 
@@ -30,7 +30,7 @@ df
     ## 4 5 4
     ## 5 6 5
 
-Running `test1()` alters the values of `df` because the internal `Rcpp::IntegerVector` object is constructed strictly by reference only. In contrast, the `rcpp_test2` function implements an implicit copy-by-value through the typecast to `std::vector`, and so
+Running `test1()` alters the values of `df` because the internal `Rcpp::IntegerVector` object is constructed strictly by reference only. Crucially, in doing so, `Rcpp` also **complete ignores the `const` directive**. In contrast, the `rcpp_test2` function implements an implicit copy-by-value through the typecast to `std::vector`, and so
 
 ``` r
 test2 (df)
@@ -66,3 +66,14 @@ df
     ## 3 4 3
     ## 4 5 4
     ## 5 6 5
+
+moral of the story
+------------------
+
+The following code is pointless:
+
+    void rcpp_stuff(const Rcpp::<object> obj) { ... }
+
+because `const` will just be ignored anyway. Never forget that! Easy way is never to pretend that `const Rcpp::<object>` has any meaning, and just write this instead:
+
+    void rcpp_stuff(Rcpp::<object> obj) { ... }
