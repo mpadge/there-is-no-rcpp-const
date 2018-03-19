@@ -1,3 +1,5 @@
+# Note to Self: Rcpp classes are always passed by reference!
+
 ```{r load, echo = FALSE, eval = FALSE}
 devtools::load_all (".", export_all = FALSE)
 devtools::document (".")
@@ -5,7 +7,7 @@ devtools::document (".")
 
 `Rcpp` passes all internals objects by reference only, never by value. This repo
 demonstrates the implications of this as a clear and simple Note To Self. It
-relies on 2 `C++` functions
+relies on these `C++` functions
 ```
 // [[Rcpp::export]]
 void rcpp_test1(const Rcpp::DataFrame df) {
@@ -33,5 +35,19 @@ contrast, the `rcpp_test2` function implements an implicit copy-by-value through
 the typecast to `std::vector`, and so
 ```{r}
 test2 (df)
+df
+```
+An alternative is `Rcpp::clone()`, as demonstrated in the third function:
+```
+// [[Rcpp::export]]
+void rcpp_test3(const Rcpp::DataFrame df) {
+    const Rcpp::IntegerVector x = df ["x"];
+    Rcpp::IntegerVector x2 = Rcpp::clone (x);
+    x2 = x2 + 1;
+}
+```
+This also leaves the original unmodified:
+```{r}
+test3 (df)
 df
 ```

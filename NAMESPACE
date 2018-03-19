@@ -2,5 +2,6 @@
 
 export(test1)
 export(test2)
+export(test3)
 importFrom(Rcpp,evalCpp)
 useDynLib(junk, .registration = TRUE)

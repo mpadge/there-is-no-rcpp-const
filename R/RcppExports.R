@@ -9,3 +9,7 @@ rcpp_test2 <- function(df) {
     invisible(.Call(`_junk_rcpp_test2`, df))
 }
 
+rcpp_test3 <- function(df) {
+    invisible(.Call(`_junk_rcpp_test3`, df))
+}
+

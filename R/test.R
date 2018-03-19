@@ -13,3 +13,11 @@ test2 <- function (df)
 {
     rcpp_test2 (df)
 }
+
+#' test3
+#' @param df A data.frame
+#' @export
+test3 <- function (df)
+{
+    rcpp_test3 (df)
+}

@@ -25,10 +25,21 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_test3
+void rcpp_test3(const Rcpp::DataFrame df);
+RcppExport SEXP _junk_rcpp_test3(SEXP dfSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::DataFrame >::type df(dfSEXP);
+    rcpp_test3(df);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_junk_rcpp_test1", (DL_FUNC) &_junk_rcpp_test1, 1},
     {"_junk_rcpp_test2", (DL_FUNC) &_junk_rcpp_test2, 1},
+    {"_junk_rcpp_test3", (DL_FUNC) &_junk_rcpp_test3, 1},
     {NULL, NULL, 0}
 };
 

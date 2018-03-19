@@ -14,3 +14,10 @@ void rcpp_test2(const Rcpp::DataFrame df) {
     for (auto i: x)
         i++;
 }
+
+// [[Rcpp::export]]
+void rcpp_test3(const Rcpp::DataFrame df) {
+    const Rcpp::IntegerVector x = df ["x"];
+    Rcpp::IntegerVector x2 = Rcpp::clone (x);
+    x2 = x2 + 1;
+}
